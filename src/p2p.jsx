@@ -1,5 +1,4 @@
 var React = require('react');
-var randomstring = require('randomstring');
 var Peer = require('peerjs');
 
 module.exports = React.createClass({

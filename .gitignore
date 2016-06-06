@@ -3,3 +3,4 @@ src/*.js
 node_modules
 npm-debug.log
 js/*.js
+js/*.js.map
