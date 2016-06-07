@@ -22,7 +22,9 @@ module.exports = React.createClass({
 			*/
 			my_id: '',
 			peer_id: '',
-			initialized: false
+			initialized: false,
+			dataToSend:'',
+			dataToReceive: ''
 		};
 	},
 
@@ -57,12 +59,13 @@ module.exports = React.createClass({
 	},
 
 	connect: function(){
-		var peer_id = this.state.peer_id;
-		var connection = this.state.peer.connect(peer_id);
+		const { peer_id, peer } = this.state;
 
+		let connection = peer.connect(peer_id);
 		this.setState({
 		    conn: connection
 		}, () => {
+			console.log("Connected to peeer: " + peer_id);
 			this.state.conn.on('open', () => {
 				this.setState({
 					connected: true
@@ -73,13 +76,32 @@ module.exports = React.createClass({
 	},
 
 	onReceiveData: function(data){
+		let { dataToReceive } = this.state;
 		console.log('Received', data);
+
+		dataToReceive += data;
+		this.setState({
+			dataToReceive: dataToReceive
+		});
 	},
 
 	handleTextChange: function(event){
 		this.setState({
 		  peer_id: event.target.value
 		});
+	},
+
+	handleTextForP2P: function(event) {
+		this.setState({
+		  dataToSend: event.target.value
+		});
+	},
+
+	onSendData: function() {
+		const { conn, dataToSend } = this.state;
+
+		console.log("sending: " + dataToSend);
+		conn.send(dataToSend);
 	},
 
 	render: function() {
@@ -115,9 +137,13 @@ module.exports = React.createClass({
 	},
 
 	renderConnected: function () {
+		const { dataToReceive } = this.state;
 		return (
 			<div>
 				<h2>We are P2P connected!</h2>
+				<input type="text" onChange={this.handleTextForP2P} />
+				<button onClick={this.onSendData}>Send Data</button>
+				<div>{dataToReceive}</div>
 			</div>
 		);
 	}
