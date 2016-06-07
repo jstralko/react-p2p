@@ -20344,14 +20344,18 @@
 
 		getInitialState: function getInitialState() {
 			return {
-				/*peer: new Peer({key: this.props.opts.peerjs_key}), //for testing*/
-
-				//for production:
-				peer: new Peer({
-					host: '0.peerjs.com', port: 9000, path: '/peerjs',
-					debug: 3,
-					config: { 'iceServers': [{ url: 'stun:stun.l.google.com:19302' }, { url: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' }] }
-				}),
+				peer: new Peer({ key: this.props.opts.peerjs_key }), //for testing
+				/*
+	   //for production:
+	   peer = new Peer({
+	     host: 'yourwebsite.com', port: 3000, path: '/peerjs',
+	     debug: 3,
+	     config: {'iceServers': [
+	       { url: 'stun:stun1.l.google.com:19302' },
+	       { url: 'turn:numb.viagenie.ca', credential: 'muazkh', username: 'webrtc@live.com' }
+	     ]}
+	   })
+	   */
 				my_id: '',
 				peer_id: '',
 				initialized: false,
