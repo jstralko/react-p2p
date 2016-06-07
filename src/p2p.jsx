@@ -24,7 +24,7 @@ module.exports = React.createClass({
 			peer_id: '',
 			initialized: false,
 			dataToSend:'',
-			dataToReceive: ''
+			dataReceived: ''
 		};
 	},
 
@@ -76,12 +76,12 @@ module.exports = React.createClass({
 	},
 
 	onReceiveData: function(data){
-		let { dataToReceive } = this.state;
+		let { dataReceived } = this.state;
 		console.log('Received', data);
 
-		dataToReceive += data;
+		dataReceived += data;
 		this.setState({
-			dataToReceive: dataToReceive
+			dataReceived: dataReceived
 		});
 	},
 
@@ -137,13 +137,13 @@ module.exports = React.createClass({
 	},
 
 	renderConnected: function () {
-		const { dataToReceive } = this.state;
+		const { dataReceived } = this.state;
 		return (
 			<div>
 				<h2>We are P2P connected!</h2>
 				<input type="text" onChange={this.handleTextForP2P} />
 				<button onClick={this.onSendData}>Send Data</button>
-				<div>{dataToReceive}</div>
+				<div>{dataReceived}</div>
 			</div>
 		);
 	}
